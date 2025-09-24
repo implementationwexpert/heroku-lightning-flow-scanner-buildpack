@@ -117,9 +117,6 @@ export PATH="\$HOME/.sfdx/bin:\$PATH"
 EOF
 chmod +x "${BUILD_DIR}/.profile.d/salesforce-cli.sh"
 
-echo "check before path BUILDPACK_DIR"
-node --version
-
 # Make the cli available to downstream buildpacks
 # https://devcenter.heroku.com/articles/buildpack-api#composing-multiple-buildpacks
 cat > "${BUILDPACK_DIR}/export" << EOF
@@ -131,7 +128,12 @@ echo "check before path"
 node --version
 
 # Make the cli available now to rest of the script
-PATH="$HOME/.heroku/node/bin:${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
+rm -f "${INSTALL_SALESFORCE_CLI_BIN_DIR}/node"
+rm -f "${INSTALL_SALESFORCE_CLI_BIN_DIR}/npm"
+rm -f "${INSTALL_SALESFORCE_CLI_BIN_DIR}/npx"
+
+# Garante que o Node correto vem antes no PATH
+export PATH="$HOME/.heroku/node/bin:${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
 ### Done
 
 sfdx --version | indent

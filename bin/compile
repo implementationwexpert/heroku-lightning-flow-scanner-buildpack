@@ -21,7 +21,23 @@
 
 ### Configure environment
 
-export PATH="$HOME/.heroku/node/bin:$PATH"
+puts_header "Installing Node.js >= 20"
+
+NODE_VERSION="24.8.0" 
+NODE_DISTRO="node-v${NODE_VERSION}-linux-x64"
+NODE_TAR="${NODE_DISTRO}.tar.xz"
+NODE_URL="https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TAR}"
+
+NODE_INSTALL_DIR="${BUILD_DIR}/.node"
+
+mkdir -p "${NODE_INSTALL_DIR}"
+curl -sSL "$NODE_URL" | tar -xJ -C "$NODE_INSTALL_DIR" --strip-components=1
+
+# Ajusta o PATH para usar este Node
+export PATH="${NODE_INSTALL_DIR}/bin:$PATH"
+
+puts_info "Node version: $(node -v)"
+puts_info "NPM version: $(npm -v)"
 
 set -o errexit  # always exit on error
 set -o pipefail # don't ignore exit codes when piping output
@@ -121,6 +137,6 @@ node --version
 
 puts_header "Lightning Flow Scanner Buildpack"
 
-yes | $HOME/.heroku/node/bin/node $INSTALL_SALESFORCE_CLI_BIN_DIR/sfdx plugins:install https://github.com/Lightning-Flow-Scanner/lightning-flow-scanner-sfdx
+yes | sfdx plugins:install https://github.com/Lightning-Flow-Scanner/lightning-flow-scanner-sfdx
 
 puts_header "Successfully installed Salesforce CLI & Lightning Flow Scanner"

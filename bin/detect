@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-echo "Lightning Flow Scanner Buildpack"
+echo "Salesforce CLI & Lightning Flow Scanner Buildpack"
 exit 0

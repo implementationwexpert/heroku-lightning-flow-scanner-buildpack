@@ -21,15 +21,6 @@
 
 ### Configure environment
 
-puts_header "Use Node.js >= 20"
-
-if [ -x "$HOME/.heroku/node/bin/node" ]; then
-  export PATH="$HOME/.heroku/node/bin:$PATH"
-fi
-
-node --version ## aqui está com a versão 20.x
-npm --version
-
 #### 
 set -o errexit  # always exit on error
 set -o pipefail # don't ignore exit codes when piping output
@@ -52,8 +43,6 @@ source $BUILDPACK_DIR/lib/sfdx.sh
 
 puts_header "Creating runtime environment"
 
-node --version
-
 export_env_dir "${ENV_DIR}" "^(SALESFORCE_CLI_)"
 
 export SALESFORCE_CLI_OS=${SALESFORCE_CLI_OS:-$(get_os)}
@@ -67,8 +56,6 @@ puts_info "SALESFORCE_CLI_ARCH=${SALESFORCE_CLI_ARCH}"
 ### Download Salesforce CLI
 
 puts_header "Downloading Salesforce CLI"
-
-node --version
 
 INSTALL_SALESFORCE_CLI_DIR="${BUILD_DIR}/.sfdx"
 INSTALL_SALESFORCE_CLI_FILE="${INSTALL_SALESFORCE_CLI_DIR}/sfdx-cli-installer"
@@ -93,8 +80,6 @@ curl \
 ### Installing Salesforce CLI
 
 puts_header "Installing Salesforce CLI"
-
-node --version
 
 tar \
   --extract \
@@ -123,9 +108,6 @@ cat > "${BUILDPACK_DIR}/export" << EOF
 export PATH="\$HOME/.sfdx/bin:\$PATH"
 EOF
 chmod +x "${BUILDPACK_DIR}/export"
-
-echo "check before path"
-node --version
 
 # Make the cli available now to rest of the script
 rm -f "${INSTALL_SALESFORCE_CLI_BIN_DIR}/node"

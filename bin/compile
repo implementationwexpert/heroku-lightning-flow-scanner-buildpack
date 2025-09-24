@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+BUILD_DIR=$1
+
+echo "-----> Installing Lightning Flow Scanner plugin"
+sfdx plugins:install lightning-flow-scanner

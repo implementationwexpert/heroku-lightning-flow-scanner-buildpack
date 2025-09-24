@@ -21,24 +21,16 @@
 
 ### Configure environment
 
-puts_header "Installing Node.js >= 20"
+puts_header "Use Node.js >= 20"
 
-NODE_VERSION="24.8.0" 
-NODE_DISTRO="node-v${NODE_VERSION}-linux-x64"
-NODE_TAR="${NODE_DISTRO}.tar.xz"
-NODE_URL="https://nodejs.org/dist/v${NODE_VERSION}/${NODE_TAR}"
+if [ -x "$HOME/.heroku/node/bin/node" ]; then
+  export PATH="$HOME/.heroku/node/bin:$PATH"
+fi
 
-NODE_INSTALL_DIR="${BUILD_DIR}/.node"
+node --version
+npm --version
 
-mkdir -p "${NODE_INSTALL_DIR}"
-curl -sSL "$NODE_URL" | tar -xJ -C "$NODE_INSTALL_DIR" --strip-components=1
-
-# Ajusta o PATH para usar este Node
-export PATH="${NODE_INSTALL_DIR}/bin:$PATH"
-
-puts_info "Node version: $(node -v)"
-puts_info "NPM version: $(npm -v)"
-
+#### 
 set -o errexit  # always exit on error
 set -o pipefail # don't ignore exit codes when piping output
 unset GIT_DIR   # Avoid GIT_DIR leak from previous build steps

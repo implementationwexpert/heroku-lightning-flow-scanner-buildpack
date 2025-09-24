@@ -115,6 +115,7 @@ PATH="${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
 
 sfdx --version | indent
 sf --version | indent
+node --version
 
 puts_header "Lightning Flow Scanner Buildpack"
 

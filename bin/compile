@@ -27,7 +27,7 @@ if [ -x "$HOME/.heroku/node/bin/node" ]; then
   export PATH="$HOME/.heroku/node/bin:$PATH"
 fi
 
-node --version
+node --version ## aqui está com a versão 20.x
 npm --version
 
 #### 
@@ -52,6 +52,8 @@ source $BUILDPACK_DIR/lib/sfdx.sh
 
 puts_header "Creating runtime environment"
 
+node --version
+
 export_env_dir "${ENV_DIR}" "^(SALESFORCE_CLI_)"
 
 export SALESFORCE_CLI_OS=${SALESFORCE_CLI_OS:-$(get_os)}
@@ -65,6 +67,8 @@ puts_info "SALESFORCE_CLI_ARCH=${SALESFORCE_CLI_ARCH}"
 ### Download Salesforce CLI
 
 puts_header "Downloading Salesforce CLI"
+
+node --version
 
 INSTALL_SALESFORCE_CLI_DIR="${BUILD_DIR}/.sfdx"
 INSTALL_SALESFORCE_CLI_FILE="${INSTALL_SALESFORCE_CLI_DIR}/sfdx-cli-installer"
@@ -89,6 +93,8 @@ curl \
 ### Installing Salesforce CLI
 
 puts_header "Installing Salesforce CLI"
+
+node --version
 
 tar \
   --extract \
@@ -125,9 +131,11 @@ PATH="${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
 
 sfdx --version | indent
 sf --version | indent
-node --version
+node --version ## aqui está com a versão 18.x
 
 puts_header "Lightning Flow Scanner Buildpack"
+
+node --version
 
 yes | sfdx plugins:install https://github.com/Lightning-Flow-Scanner/lightning-flow-scanner-sfdx
 

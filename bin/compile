@@ -142,18 +142,6 @@ node --version | indent ## aqui está com a versão 18.x
 
 puts_header "Lightning Flow Scanner Buildpack"
 
-NODE_VERSION=$(node --version | sed 's/v//')
-
-# Pega só a major version
-NODE_MAJOR=$(echo $NODE_VERSION | cut -d. -f1)
-
-if [ "$NODE_MAJOR" -lt 24 ]; then
-  echo "❌ Node.js >= 24 é requerido, mas encontrado: v$NODE_VERSION"
-  exit 1
-fi
-
-echo "✅ Node.js version OK: v$NODE_VERSION"
-
-## yes | sfdx plugins:install https://github.com/Lightning-Flow-Scanner/lightning-flow-scanner-sfdx
+yes | sfdx plugins:install https://github.com/Lightning-Flow-Scanner/lightning-flow-scanner-sfdx
 
 puts_header "Successfully installed Salesforce CLI & Lightning Flow Scanner"

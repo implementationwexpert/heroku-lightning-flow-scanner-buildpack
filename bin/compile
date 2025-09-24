@@ -125,8 +125,7 @@ EOF
 chmod +x "${BUILDPACK_DIR}/export"
 
 # Make the cli available now to rest of the script
-PATH="${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
-
+PATH="$HOME/.heroku/node/bin:${INSTALL_SALESFORCE_CLI_BIN_DIR}:$PATH"
 ### Done
 
 sfdx --version | indent
@@ -142,8 +141,8 @@ NODE_VERSION=$(node --version | sed 's/v//')
 # Pega só a major version
 NODE_MAJOR=$(echo $NODE_VERSION | cut -d. -f1)
 
-if [ "$NODE_MAJOR" -lt 20 ]; then
-  echo "❌ Node.js >= 20 é requerido, mas encontrado: v$NODE_VERSION"
+if [ "$NODE_MAJOR" -lt 24 ]; then
+  echo "❌ Node.js >= 24 é requerido, mas encontrado: v$NODE_VERSION"
   exit 1
 fi
 
